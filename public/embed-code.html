@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Código para empotrar el chatbot</title>
+    <style>
+        .code-container {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin: 20px 0;
+        }
+        .instructions {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Instrucciones para empotrar el chatbot</h1>
+    
+    <div class="instructions">
+        <p>1. Copia el siguiente código HTML</p>
+        <p>2. Pégalo en cualquier parte de tu sitio web</p>
+        <p>3. El chatbot aparecerá en la esquina inferior derecha</p>
+    </div>
+
+    <div class="code-container">
+<!-- Chatbot CHIDO -->
+<iframe 
+  src="https://chido-ohsesx8rp-nfts2030s-projects.vercel.app/chatbot.html" 
+  style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    height: 500px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 9999;
+  "
+  allow="microphone"
+></iframe>
+<!-- Fin del chatbot -->
+    </div>
+
+    <h2>Opciones de personalización:</h2>
+    <div class="code-container">
+// Para cambiar el tamaño:
+width: 350px;  // Ancho del iframe
+height: 500px; // Alto del iframe
+
+// Para cambiar la posición:
+bottom: 20px;  // Distancia desde abajo
+right: 20px;   // Distancia desde la derecha
+
+// Para móviles (opcional):
+@media (max-width: 768px) {
+  width: 100%;
+  height: 70vh;
+  bottom: 0;
+  right: 0;
+  border-radius: 0;
+}
+    </div>
+</body>
+</html>

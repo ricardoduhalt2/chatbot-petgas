@@ -6,12 +6,17 @@ const fetch = require('node-fetch');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
+app.use(express.static('public'));
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE);
 
-app.post('/ask', async (req, res) => {
+app.post('/api/ask', async (req, res) => {
   const { question } = req.body;
   if (!question) return res.status(400).json({ error: 'Missing question' });
 
