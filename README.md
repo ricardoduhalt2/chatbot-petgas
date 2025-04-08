@@ -80,6 +80,9 @@ Pega este código en cualquier página web para mostrar el chatbot en la esquina
 - Diseño más compacto y responsivo para móviles y escritorio.
 - Encabezado simplificado con solo el texto **"CHIDO"**.
 - Código de inserción actualizado para reflejar el nuevo diseño.
+- Se añadió un **resplandor verde** alrededor del recuadro del chatbot para mayor visibilidad.
+- Se mejoró el botón flotante con el ícono del bot, que ahora aparece cuando el chatbot está cerrado para poder abrirlo fácilmente.
+- Se hizo visible nuevamente el botón **"Enviar"** junto al campo de texto para facilitar el envío de mensajes.
 
 ---
 
