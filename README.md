@@ -8,7 +8,7 @@
 - **Base de conocimiento** alojada en Supabase, que se enriquece automáticamente con nuevas respuestas.
 - **IA integrada** mediante OpenRouter para responder cuando no hay información suficiente.
 - **Priorización de fuentes confiables**: petgascoin.com, petgas.com.mx, petgas.com.do.
-- **Despliegue en Vercel** con funciones serverless y contenido estático.
+- **Despliegue en Render** con backend Node.js y frontend estático.
 
 ## Funcionamiento
 
@@ -21,17 +21,17 @@
 ## Tecnologías
 
 - **Frontend:** HTML, Tailwind CSS, JavaScript
-- **Backend:** Node.js, Express, Serverless Functions (Vercel)
+- **Backend:** Node.js, Express
 - **Base de datos:** Supabase
 - **IA:** OpenRouter API
 
 ## Estructura del proyecto
 
 - `/public`: Archivos estáticos y chatbot embebible.
-- `/api/ask.js`: Función serverless para responder preguntas.
+- `/api/ask.js`: Endpoint API para responder preguntas.
 - `/backend/server.js`: Backend Express alternativo.
 - `/server.js`: Backend Express alternativo (posible redundancia).
-- `vercel.json`: Configuración de despliegue en Vercel.
+- `vercel.json`: Configuración previa para Vercel (ya no usada).
 
 ## Variables de entorno necesarias
 
@@ -42,4 +42,47 @@
 
 ## Despliegue
 
-El proyecto está preparado para desplegarse en Vercel, sirviendo contenido estático y funciones serverless para el chatbot.
+El proyecto está desplegado exitosamente en **Render.com**:
+
+**URL de producción:**  
+https://chatbot-petgas.onrender.com
+
+---
+
+## Código para empotrar el chatbot en cualquier sitio web
+
+```html
+<iframe 
+  src="https://chatbot-petgas.onrender.com/chatbot.html" 
+  style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 256px;
+    height: 500px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 9999;
+  "
+  allow="microphone"
+></iframe>
+```
+
+Pega este código en cualquier página web para mostrar el chatbot en la esquina inferior derecha.
+
+---
+
+## Mejoras estéticas - Agosto 2025
+
+- Se añadió botón **"Enviar"** visible junto al campo de texto.
+- Se agregó un botón flotante con el ícono del bot para abrir/cerrar el chat.
+- Diseño más compacto y responsivo para móviles y escritorio.
+- Encabezado simplificado con solo el texto **"CHIDO"**.
+- Código de inserción actualizado para reflejar el nuevo diseño.
+
+---
+
+## Estado final
+
+**Chatbot desplegado y funcionando correctamente en Render. Misión cumplida.**

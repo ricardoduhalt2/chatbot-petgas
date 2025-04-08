@@ -22,19 +22,36 @@
   white-space: pre-wrap;
 }
 </style>
+<style>
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  #chatbot-root {
+    width: 90% !important;
+    right: 5% !important;
+    left: 5% !important;
+    bottom: 1rem !important;
+    max-height: 80vh !important;
+  }
+  #chatbot-toggle {
+    right: 1rem !important;
+    bottom: 1rem !important;
+  }
+}
+</style>
 </head>
 <body class="bg-gray-100">
-<div id="chatbot-root" class="fixed bottom-4 right-4 w-80 max-h-[80vh] bg-white rounded-lg shadow-lg flex flex-col overflow-hidden border border-gray-300">
+<div id="chatbot-root" class="fixed bottom-4 right-8 w-64 max-h-[80vh] bg-white rounded-lg shadow-lg flex flex-col overflow-hidden border border-gray-300">
   <div class="flex items-center justify-between p-3 bg-green-600 text-white rounded-t-lg shadow-md">
     <div class="flex items-center space-x-2">
       <img src="assets/chatbot-icon.png" alt="Bot" class="rounded-full flex-shrink-0 border-2 border-white animate-pulse-slow">
-      <span class="font-semibold text-lg">CHIDO by Petgas</span>
+      <span class="font-semibold text-lg">CHIDO</span>
     </div>
     <button id="close-btn" class="text-white text-xl font-bold hover:text-gray-200 transition">&times;</button>
   </div>
   <div id="chat-window" class="flex-1 overflow-y-auto p-3 space-y-3 bg-gradient-to-b from-white to-gray-100"></div>
-  <div class="p-3 border-t border-gray-300 bg-white flex space-x-2">
-    <input id="user-input" type="text" placeholder="Escribe tu pregunta..." class="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 transition" />
+  <div class="p-3 border-t border-gray-300 bg-white flex flex-nowrap space-x-2">
+    <input id="user-input" type="text" placeholder="Escribe tu pregunta..." class="flex-1 max-w-[70%] border border-gray-300 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 transition" />
+    <button id="send-btn" class="flex-shrink-0 bg-green-500 hover:bg-green-600 text-white rounded-full px-3 py-2 transition">Enviar</button>
   </div>
 </div>
 
@@ -46,17 +63,42 @@
 const chatWindow = document.getElementById('chat-window');
 const userInput = document.getElementById('user-input');
 const closeBtn = document.getElementById('close-btn');
+const sendBtn = document.getElementById('send-btn');
 
-closeBtn.onclick = () => {
+// Toggle button creation
+const toggleBtn = document.createElement('button');
+toggleBtn.id = 'chatbot-toggle';
+toggleBtn.style.display = 'none';
+toggleBtn.className = 'fixed bottom-4 right-4 bg-green-600 rounded-full p-2 shadow-lg border-2 border-white';
+toggleBtn.innerHTML = '<img src="assets/chatbot-icon.png" alt="Bot" class="w-12 h-12 rounded-full animate-pulse-slow">';
+document.body.appendChild(toggleBtn);
+
+function openChat() {
+  document.getElementById('chatbot-root').style.display = 'flex';
+  toggleBtn.style.display = 'none';
+}
+
+function closeChat() {
   document.getElementById('chatbot-root').style.display = 'none';
-};
+  toggleBtn.style.display = 'block';
+}
+
+closeBtn.onclick = closeChat;
+toggleBtn.onclick = openChat;
+
+async function sendMessage() {
+  if (userInput.value.trim() === '') return;
+  const question = userInput.value.trim();
+  appendMessage('Tú', question);
+  userInput.value = '';
+  await handleQuestion(question);
+}
+
+sendBtn.onclick = sendMessage;
 
 userInput.addEventListener('keydown', async (e) => {
   if (e.key === 'Enter' && userInput.value.trim() !== '') {
-    const question = userInput.value.trim();
-    appendMessage('Tú', question);
-    userInput.value = '';
-    await handleQuestion(question);
+    await sendMessage();
   }
 });
 
