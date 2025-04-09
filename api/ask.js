@@ -49,7 +49,7 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { question } = req.body;
+    const { question, superchido } = req.body;
     if (!question) {
       res.status(400).json({ error: 'Missing question' });
       return;
@@ -66,12 +66,11 @@ module.exports = async (req, res) => {
     const normalizedQuestion = normalize(question);
 
     if (normalizedQuestion === 'superchido') {
-      openChatMode = true;
       res.json({ answer: 'Modo chat abierto activado. Ahora puedes hacer preguntas fuera de la base de conocimiento.' });
       return;
     }
 
-    if (!openChatMode) {
+    if (!superchido) {
       const { data: kbEntries } = await supabase
         .from('knowledge_base')
         .select('id, question, answer')
@@ -157,7 +156,7 @@ ${contextText}
     return;
   }
 
-  // If openChatMode is true, always use Gemini directly
+  // If superchido is true, always use Gemini directly
   const aiResponse = await fetchGemini(question);
   res.json({ answer: aiResponse });
   } catch (err) {
