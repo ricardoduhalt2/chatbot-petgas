@@ -6,7 +6,7 @@
 
 - **Chatbot web** fácil de integrar en cualquier página.
 - **Base de conocimiento** alojada en Supabase, que se enriquece automáticamente con nuevas respuestas.
-- **IA integrada** mediante OpenRouter para responder cuando no hay información suficiente.
+- **IA integrada** mediante Google Gemini para responder cuando no hay información suficiente.
 - **Priorización de fuentes confiables**: petgascoin.com, petgas.com.mx, petgas.com.do.
 - **Despliegue en Render** con backend Node.js y frontend estático.
 
@@ -14,16 +14,21 @@
 
 1. El usuario escribe una pregunta en el chatbot.
 2. El backend busca coincidencias en la base de conocimiento.
-3. Si no hay coincidencias relevantes, consulta a OpenRouter (modelo quasar-alpha).
+3. Si no hay coincidencias relevantes, consulta a Google Gemini (modelo gemini-2.0-flash).
 4. Si la respuesta AI es útil y no genérica, se guarda en la base para mejorar futuras respuestas.
 5. La respuesta se muestra al usuario en tiempo real.
+6. **Modo SUPERCHIDO:** Si el usuario escribe "SUPERCHIDO", se activa un modo de chat libre donde **todas las preguntas posteriores** se envían directamente a Google Gemini, ignorando la base de conocimiento.  
+   Este modo permanece activo hasta que se cierre o recargue la página.  
+   En la interfaz, se muestra un mensaje "AHORA ESTÁS EN MODO SUPERCHIDO" y un LED rojo parpadeante junto al ícono del bot.
+7. **Aprobación manual para aprendizaje:** Cuando Gemini genera una respuesta, el chatbot **pregunta si deseas guardar esa respuesta** para futuras consultas.  
+   Solo si apruebas manualmente, la respuesta se guarda en la base de conocimiento, permitiendo que el chatbot "aprenda" de manera controlada.
 
 ## Tecnologías
 
 - **Frontend:** HTML, Tailwind CSS, JavaScript
 - **Backend:** Node.js, Express
 - **Base de datos:** Supabase
-- **IA:** OpenRouter API
+- **IA:** Google Gemini API
 
 ## Estructura del proyecto
 
@@ -37,7 +42,7 @@
 
 - `SUPABASE_URL`
 - `SUPABASE_SERVICE_ROLE`
-- `OPENROUTER_API_KEY`
+- `GEMINI_API_KEY`
 - `PORT` (opcional, por defecto 3001)
 
 ## Despliegue
@@ -85,6 +90,13 @@ Pega este código en cualquier página web para mostrar el chatbot en la esquina
 - Se hizo visible nuevamente el botón **"Enviar"** junto al campo de texto para facilitar el envío de mensajes.
 
 ---
+
+## Historial de alimentación de la base de conocimiento
+
+- **Agosto 2025:**  
+  Se alimentó la base de conocimiento con información estructurada proveniente del **Acuerdo de París** y la **NDC-RD 2020**.  
+  Esto incluye preguntas frecuentes, respuestas claras y palabras clave asociadas, insertadas en Supabase mediante un script SQL.  
+  El objetivo es mejorar la precisión del chatbot en temas de cambio climático, compromisos internacionales y acciones nacionales.
 
 ## Estado final
 

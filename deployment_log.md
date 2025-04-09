@@ -62,3 +62,24 @@
 ---
 
 ## Estado final: **Misión cumplida. Chatbot desplegado y funcional en Render.**
+
+---
+
+## Comportamiento especial - Palabra clave "SUPERCHIDO"
+
+- Cuando el usuario escribe **SUPERCHIDO**, el chatbot activa un **modo chat libre persistente**.
+- En este modo, **todas las preguntas posteriores** se envían directamente a la API de Google Gemini, **ignorando completamente la base de conocimiento**.
+- Este modo permanece activo **hasta que el usuario cierre o recargue la página**.
+- La interfaz muestra un mensaje **"AHORA ESTÁS EN MODO SUPERCHIDO"** y un **LED rojo parpadeante** junto al ícono del bot para indicar que está activo.
+- Esto permite obtener respuestas más abiertas y creativas desde la IA, sin restricciones.
+- Por defecto, el chatbot prioriza la base de conocimiento y solo consulta la IA si no encuentra coincidencias relevantes.
+- **Aprobación manual para aprendizaje:** Cuando Gemini genera una respuesta, el chatbot **pregunta al usuario si desea guardar esa respuesta** para futuras consultas.  
+  Solo si el usuario aprueba manualmente, la respuesta se guarda en la base de conocimiento, permitiendo que el chatbot "aprenda" de manera controlada y segura.
+
+### Alimentación de la base de conocimiento - Agosto 2025
+
+- Se planificó y ejecutó la carga masiva de pares pregunta-respuesta derivados del **Acuerdo de París (2015)** y la **Contribución Nacionalmente Determinada 2020 (NDC-RD 2020)**.
+- Se generó un **script SQL** para insertar estos datos en las tablas `knowledge_base` y `keywords` en Supabase.
+- Cada entrada incluye preguntas, respuestas y palabras clave para mejorar la precisión del chatbot.
+- Esta alimentación busca mejorar la capacidad del chatbot para responder sobre cambio climático, compromisos internacionales y acciones nacionales.
+- Si algo falla o se requiere revertir, revisar este log y el script SQL utilizado.
