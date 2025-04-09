@@ -98,6 +98,63 @@ Pega este código en cualquier página web para mostrar el chatbot en la esquina
   Esto incluye preguntas frecuentes, respuestas claras y palabras clave asociadas, insertadas en Supabase mediante un script SQL.  
   El objetivo es mejorar la precisión del chatbot en temas de cambio climático, compromisos internacionales y acciones nacionales.
 
+## Alimentar la base de conocimientos
+
+Existen dos formas de alimentar la base de conocimientos en Supabase:
+
+### 1. Alimentación manual con script SQL + API
+
+- Edita o genera el archivo `sql/feed_knowledge_base.sql` con las preguntas y respuestas.
+- Ejecuta el script:
+
+```bash
+node api/feed_supabase.js
+```
+
+Este script insertará automáticamente las preguntas y respuestas en Supabase.
+
+### 2. Panel privado con login y formulario
+
+- Accede a `http://localhost:3001/admin.html`
+- Inicia sesión con:
+  - Usuario: `admin` / Contraseña: `admin123`
+  - o Usuario: `editor` / Contraseña: `editor123`
+- Pega el texto plano (sin símbolos Markdown, aunque el sistema limpia algunos automáticamente).
+- Haz clic en **Generar Preguntas y Respuestas**.
+- Revisa la vista previa (ahora sin truncamientos).
+- Confirma con **Insertar en Supabase**.
+
+El backend limpia automáticamente símbolos Markdown (`#`, `*`, `_`, enlaces, backticks) y elimina truncamientos `"..."` al inicio o final de líneas.
+
+---
+
+## Panel público
+
+- Accede a `http://localhost:3001/knowledge.html`
+- Visualiza toda la base de conocimientos con diseño compacto, buscador y paginación.
+
+---
+
+## Funciones de Gemini en este proyecto
+
+- **Responder preguntas del usuario:**  
+  Cuando el usuario hace una pregunta y no hay coincidencias relevantes en la base de conocimientos, el backend envía la pregunta a Gemini para obtener una respuesta generada por IA, contextualizada y natural.
+
+- **Generar preguntas y respuestas automáticas:**  
+  A partir de un texto largo, Gemini genera pares pregunta-respuesta en formato JSON, sin truncamientos ni errores, para alimentar la base de conocimientos con información de alta calidad.
+
+- **Alimentar la base desde el formulario privado:**  
+  El formulario privado usa la API de Gemini para convertir texto plano en preguntas y respuestas automáticas, que el usuario puede revisar y confirmar antes de insertarlas en Supabase.
+
+---
+
 ## Estado final
+
+- Backend con endpoints `/ask`, `/save-answer`, `/login`, `/generate-qa`, `/generate-qa-ai`, `/insert-qa`, `/knowledge`.
+- Panel privado para alimentar la base con limpieza automática, generación con Gemini y vista previa sin truncamientos.
+- Panel público para explorar la base con buscador y paginación.
+- Alimentación también posible vía script `api/feed_supabase.js`.
+- Heurística mejorada para generar preguntas más naturales y limpias.
+- Integración con Gemini para respuestas y generación de conocimiento.
 
 **Chatbot desplegado y funcionando correctamente en Render. Misión cumplida.**

@@ -83,3 +83,36 @@
 - Cada entrada incluye preguntas, respuestas y palabras clave para mejorar la precisión del chatbot.
 - Esta alimentación busca mejorar la capacidad del chatbot para responder sobre cambio climático, compromisos internacionales y acciones nacionales.
 - Si algo falla o se requiere revertir, revisar este log y el script SQL utilizado.
+
+---
+
+### Alimentación de la base de conocimiento - Septiembre 2025
+
+- Se creó el script `api/feed_supabase.js` para insertar preguntas y respuestas en Supabase vía API REST.
+- Se implementó un **panel privado** (`/admin.html`) con:
+  - Login (usuarios: `admin`/`admin123`, `editor`/`editor123`)
+  - Formulario para pegar texto plano
+  - Limpieza automática de símbolos Markdown (`#`, `*`, `_`, enlaces, backticks)
+  - Eliminación de truncamientos `"..."` al inicio o final de líneas
+  - Generación automática de preguntas y respuestas con heurística mejorada
+  - Vista previa sin truncamientos, con saltos de línea y quiebre de palabras
+  - Botón para insertar directamente en Supabase
+- Se implementó un **panel público** (`/knowledge.html`) con:
+  - Visualización de toda la base de conocimientos
+  - Diseño compacto y responsivo
+  - Buscador integrado
+  - Paginación para grandes volúmenes
+- El backend cuenta con endpoints:
+  - `/ask` para responder preguntas
+  - `/save-answer` para guardar respuestas aprobadas
+  - `/login` para autenticación
+  - `/generate-qa` para generar preguntas/respuestas desde texto
+  - `/insert-qa` para insertar en Supabase
+  - `/knowledge` para consultar toda la base
+- La alimentación puede hacerse:
+  - Manualmente con `sql/feed_knowledge_base.sql` + `node api/feed_supabase.js`
+  - O mediante el panel privado con limpieza y vista previa
+- La heurística para generar preguntas fue mejorada para evitar truncamientos y limpiar símbolos, generando preguntas más naturales y coherentes.
+- Persisten algunos truncamientos `"..."` en preguntas generadas, detectados en Supabase y en pruebas recientes.
+- Próxima corrección: limpiar explícitamente `"..."` en el texto fuente antes de generar preguntas, y asegurar que la palabra `"¿Qué"` esté correctamente formada.
+- Documentación actualizada en README.md con todos estos pasos y funcionalidades.
