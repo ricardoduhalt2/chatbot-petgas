@@ -27,6 +27,8 @@ A web-based AI chatbot designed to answer questions about climate change, intern
 
 - **Knowledge Base:** Climate change, Paris Agreement, NDCs, and more
 - **SUPERCHIDO Mode:** Free-form AI chat ignoring knowledge base
+- **Voice Input:** Speech-to-text functionality with microphone support
+- **Mobile Optimized:** Responsive design with touch-friendly interface
 - **Admin Panel:** Upload and clean documents, generate Q&A pairs, approve AI responses
 - **Public Knowledge Viewer:** Searchable, paginated access to all stored Q&A
 - **Embeddable Widget:** Easily add chatbot to any website via iframe
@@ -74,7 +76,9 @@ From the root directory:
 npm start
 ```
 
-The backend will run on port 10000 by default.
+The backend will run on port 3001 by default. Access the chatbot at:
+- http://localhost:3001/chatbot.html
+- http://localhost:3001/admin.html
 
 ---
 

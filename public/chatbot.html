@@ -14,6 +14,7 @@
   animation: pulseSlow 2.5s infinite ease-in-out;
 }
 
+
 /* Limitar altura de burbujas y hacer scroll interno si es necesario */
 #chat-window span.inline-block {
   max-height: 200px;
@@ -40,17 +41,17 @@
 </style>
 </head>
 <body class="bg-gray-100">
-<div id="chatbot-root" class="fixed bottom-4 right-8 w-64 max-h-[80vh] bg-white rounded-lg shadow-lg flex flex-col overflow-hidden border border-gray-300">
-  <div class="flex items-center justify-between p-3 bg-green-600 text-white rounded-t-lg shadow-md">
+<div id="chatbot-root" class="fixed bottom-4 right-8 w-64 max-h-[80vh] bg-white rounded-lg shadow-lg flex flex-col overflow-hidden border-4 border-green-600">
+  <div class="flex items-center justify-between p-4 bg-gradient-to-r from-green-800 to-green-500 text-white rounded-t-lg shadow-md">
     <div class="flex items-center space-x-2">
       <img src="assets/chatbot-icon.png" alt="Bot" class="rounded-full flex-shrink-0 border-2 border-white animate-pulse-slow">
       <span class="font-semibold text-lg">CHIDO</span>
     </div>
     <button id="close-btn" class="text-white text-xl font-bold hover:text-gray-200 transition">&times;</button>
   </div>
-  <div id="chat-window" class="flex-1 overflow-y-auto p-3 space-y-3 bg-gradient-to-b from-white to-gray-100"></div>
+  <div id="chat-window" class="flex-1 overflow-y-auto p-3 space-y-3 bg-white"></div>
   <div class="p-3 border-t border-gray-300 bg-white flex flex-nowrap space-x-2">
-    <input id="user-input" type="text" placeholder="Escribe tu pregunta..." class="flex-1 max-w-[70%] border border-gray-300 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 transition" />
+    <input id="user-input" type="text" placeholder="Escribe tu pregunta..." class="flex-1 max-w-[70%] border border-gray-300 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 transition bg-gray-100 text-gray-800" />
     <button id="send-btn" class="flex-shrink-0 bg-green-500 hover:bg-green-600 text-white rounded-full px-3 py-2 transition">Enviar</button>
   </div>
 </div>

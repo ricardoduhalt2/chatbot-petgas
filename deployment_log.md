@@ -65,6 +65,44 @@
 
 ---
 
+## Octubre 2025 - Mejoras Estéticas y de Usabilidad
+
+### Cambios Visuales (4 Oct 2025)
+1. **Encabezado del Chatbot**:
+   - Eliminado gradiente animado morado-azul del texto "C.H.I.D.O."
+   - Texto ahora en color blanco sólido
+
+2. **Campo de Input**:
+   - Cambiado texto de blanco a gris oscuro (text-gray-800)
+   - Fondo cambiado de semitransparente a blanco sólido (bg-white)
+   - Placeholder cambiado a gris (placeholder-gray-500)
+
+3. **Objetivo**: Mejorar legibilidad y contraste
+
+## Mejoras en Reconocimiento de Voz y Móvil
+
+### Funcionalidad de Dictado por Voz
+- Implementado reconocimiento de voz usando Web Speech API
+- Botón de micrófono integrado en la interfaz
+- Soporte para español (es-MX)
+- Manejo de permisos y errores mejorado
+- Visual feedback durante la grabación
+
+### Optimización para Móviles
+- Detección automática de dispositivos móviles
+- Instrucciones claras para permisos de micrófono
+- Comportamiento adaptado para iOS (mantener presionado)
+- Diseño responsive mejorado para pantallas pequeñas
+- Mensajes de error contextuales
+
+### Compatibilidad
+- Chrome/Android: Soporte completo
+- Safari/iOS: Soporte limitado (requiere iOS 14.3+)
+- Firefox: Soporte limitado
+- Requiere HTTPS en producción (excepto localhost)
+
+---
+
 ## Comportamiento especial - Palabra clave "SUPERCHIDO"
 
 - Cuando el usuario escribe **SUPERCHIDO**, el chatbot activa un **modo chat libre persistente**.
