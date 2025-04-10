@@ -67,7 +67,23 @@
 
 ## Octubre 2025 - Mejoras Estéticas y de Usabilidad
 
-### Cambios Visuales (4 Oct 2025)
+### Cambios Visuales y de Voz (4 Oct 2025)
+1. **Síntesis de Voz**:
+   - Implementada voz robótica para respuestas
+   - Detección automática de idioma (español/inglés)
+   - Configuración de tono, velocidad y volumen
+   - Efectos de variación aleatoria para sonido robótico
+
+2. **Encabezado del Chatbot**:
+   - Eliminado gradiente animado morado-azul del texto "C.H.I.D.O."
+   - Texto ahora en color blanco sólido
+
+3. **Campo de Input**:
+   - Cambiado texto de blanco a gris oscuro (text-gray-800)
+   - Fondo cambiado de semitransparente a blanco sólido (bg-white)
+   - Placeholder cambiado a gris (placeholder-gray-500)
+
+4. **Objetivo**: Mejorar legibilidad, contraste y experiencia de voz
 1. **Encabezado del Chatbot**:
    - Eliminado gradiente animado morado-azul del texto "C.H.I.D.O."
    - Texto ahora en color blanco sólido

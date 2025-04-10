@@ -13,7 +13,15 @@ A web-based AI chatbot designed to answer questions about climate change, intern
 
 ---
 
-## 🚀 Recent Updates (September 2025)
+## 🚀 Recent Updates (October 2025)
+
+### Últimos Cambios
+- Implementado síntesis de voz para respuestas del chatbot
+- Detección automática de idioma (español/inglés)
+- Configuración de voz robótica con efectos especiales
+- Mejorado diseño de la interfaz del chatbot
+
+## 🚀 Previous Updates (September 2025)
 
 - Fixed broken `backend` submodule, converted to normal directory
 - Added all backend source files to repository

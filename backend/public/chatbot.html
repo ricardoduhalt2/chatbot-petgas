@@ -247,6 +247,34 @@ try {
   micBtn.style.display = 'none';
 }
 
+// Detectar idioma del texto (español/inglés)
+function detectLanguage(text) {
+  const englishWords = /\b(the|and|you|are|is|to|of|in|it)\b/i;
+  return englishWords.test(text) ? 'en-US' : 'es-MX';
+}
+
+// Configurar síntesis de voz robótica
+const synth = window.speechSynthesis;
+function speak(text) {
+  if (synth.speaking) {
+    synth.cancel();
+  }
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = detectLanguage(text);
+  utterance.rate = 0.9; // Más lento
+  utterance.pitch = 0.5; // Más grave
+  utterance.volume = 0.8; // Volumen reducido
+  
+  // Efecto robótico adicional
+  utterance.onboundary = (event) => {
+    if (event.name === 'word') {
+      utterance.rate = Math.random() * 0.2 + 0.8; // Variación aleatoria
+    }
+  };
+  
+  synth.speak(utterance);
+}
+
 async function handleQuestion(question) {
   appendMessage('Bot', 'Pensando...');
   try {
@@ -261,6 +289,8 @@ async function handleQuestion(question) {
     const answer = data.answer || 'No tengo una respuesta en este momento.';
     console.log('Mostrando respuesta:', answer);
     appendMessage('Bot', answer);
+    // Leer respuesta en voz alta
+    speak(answer);
 
     // Si requiere aprobación para guardar
     if (data.pendingApproval) {
@@ -303,6 +333,7 @@ async function handleQuestion(question) {
     console.error('Error consultando backend:', err);
     chatWindow.lastChild.remove();
     appendMessage('Bot', 'Error al conectar con el asistente.');
+    speak('Error al conectar con el asistente');
   }
 }
 </script>
