@@ -16,11 +16,38 @@
 
 /* Limitar altura de burbujas y hacer scroll interno si es necesario */
 #chat-window span.inline-block {
-  max-height: 200px;
-  overflow-y: auto;
   display: inline-block;
   white-space: pre-wrap;
 }
+
+/* Modern Scrollbar Styles */
+#chat-window::-webkit-scrollbar {
+  width: 6px; /* Ancho del scroll */
+}
+#chat-window::-webkit-scrollbar-track {
+  background: transparent; /* Fondo transparente */
+  margin: 4px 0; /* Margen para que no pegue a los bordes */
+}
+#chat-window::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* Color del thumb */
+  border-radius: 3px; /* Bordes redondeados */
+  border: none;
+}
+/* Para Firefox */
+#chat-window {
+  scrollbar-width: thin; /* Scroll delgado */
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent; /* Color thumb y track */
+}
+
+/* Fullscreen State */
+.is-fullscreen {
+  max-width: 95vw !important;
+  max-height: 95vh !important;
+  border-radius: 0.5rem !important; /* Optional: slightly rounded corners in fullscreen */
+  /* Ensure it stays centered if needed, or adjust positioning */
+  /* position: fixed; top: 2.5vh; left: 2.5vw; right: 2.5vw; bottom: 2.5vh; */
+}
+
 
 /* Glow verde */
 .glow-green {
@@ -84,7 +111,8 @@
 </button>
 
 <div id="chatbot-root" class="fixed inset-0 w-full h-full flex items-center justify-center z-50 p-4">
-  <div class="w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden rounded-2xl shadow-2xl backdrop-blur-md bg-gradient-to-br from-white/30 to-gray-300/30 border border-white/20">
+  <!-- This is the container that will be resized - Apply fullscreen by default -->
+  <div id="chatbot-container" class="w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden rounded-2xl shadow-2xl backdrop-blur-md bg-gradient-to-br from-white/30 to-gray-300/30 border border-white/20 transition-all duration-300 ease-in-out is-fullscreen">
   <div class="flex items-center justify-between p-4 rounded-t-2xl shadow-md glow-border backdrop-blur-md relative overflow-hidden text-white" style="background-color: rgba(0,0,0,0.5) !important;">
     <div class="flex items-center space-x-2">
       <div class="relative">
@@ -94,20 +122,26 @@
       </div>
       <span class="font-semibold text-lg text-white">C.H.I.D.O.</span>
     </div>
-    <button id="close-btn" class="text-2xl font-light hover:scale-125 transition-transform duration-300 gradient-text">&times;</button>
+    <div class="flex items-center space-x-2">
+        <!-- Close Button -->
+        <button id="close-btn" class="text-2xl font-light hover:scale-125 transition-transform duration-300 gradient-text">&times;</button>
+    </div>
   </div>
   <div id="superchido-banner" class="hidden text-center text-green-700 font-bold p-2 bg-green-100 border-b border-green-400 animate-pulse">
     AHORA ESTÁS EN MODO SUPERCHIDO
   </div>
-  <div id="chat-window" class="flex-1 overflow-y-auto p-3 space-y-3 bg-gradient-to-b from-white to-gray-100"></div>
+  <div id="chat-window" class="flex-1 overflow-y-auto min-h-0 p-3 space-y-3 bg-gradient-to-b from-white to-gray-100"></div>
   <div class="p-4 border-t border-white/20 bg-white/20 backdrop-blur-md flex space-x-2">
     <input id="user-input" type="text" placeholder="Escribe tu pregunta..." class="flex-1 border border-white/30 bg-white rounded-full px-4 py-1.5 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-400 transition font-light" />
     <button id="mic-btn" class="px-3 py-1.5 text-sm rounded-full backdrop-blur-md border border-white/30 bg-white/10 font-semibold transition hover:scale-105 gradient-text" title="Hablar">
       🎤
     </button>
-    <button id="send-btn" class="px-3 py-1.5 text-sm rounded-full backdrop-blur-md border border-white/30 bg-white/10 font-semibold transition hover:scale-105 gradient-text">Enviar</button>
+    <button id="send-btn" class="px-3 py-1.5 text-sm rounded-full backdrop-blur-md border border-white/30 bg-white/10 font-semibold transition hover:scale-105 gradient-text" title="Enviar">
+      ✈️
+    </button>
   </div>
 </div>
+</div> <!-- Close chatbot-root -->
 
 <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
@@ -119,16 +153,28 @@ const userInput = document.getElementById('user-input');
 const closeBtn = document.getElementById('close-btn');
 const openBtn = document.getElementById('open-chatbot-btn');
 const sendBtn = document.getElementById('send-btn');
+// const fullscreenBtn = document.getElementById('fullscreen-btn'); // Removed
+const chatContainer = document.getElementById('chatbot-container'); // Reference to the resizable container
+// const expandIcon = document.getElementById('expand-icon'); // Removed
+// const collapseIcon = document.getElementById('collapse-icon'); // Removed
+
 
 closeBtn.onclick = () => {
   document.getElementById('chatbot-root').style.display = 'none';
   openBtn.style.display = 'block';
+  // Ensure it's not in fullscreen when closed - No longer needed as it's always fullscreen
+  // chatContainer.classList.remove('is-fullscreen');
+  // expandIcon.classList.remove('hidden');
+  // collapseIcon.classList.add('hidden');
+  // fullscreenBtn.title = "Pantalla Completa";
 };
 
 openBtn.onclick = () => {
   document.getElementById('chatbot-root').style.display = 'flex';
   openBtn.style.display = 'none';
 };
+
+// Fullscreen Toggle Logic - Removed
 
 userInput.addEventListener('keydown', async (e) => {
   if (e.key === 'Enter' && userInput.value.trim() !== '') {
