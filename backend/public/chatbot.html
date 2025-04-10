@@ -253,22 +253,24 @@ function detectLanguage(text) {
   return englishWords.test(text) ? 'en-US' : 'es-MX';
 }
 
-// Configurar síntesis de voz robótica
+// Configurar síntesis de voz robótica mexicana amigable
 const synth = window.speechSynthesis;
 function speak(text) {
   if (synth.speaking) {
     synth.cancel();
   }
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = detectLanguage(text);
-  utterance.rate = 0.9; // Más lento
-  utterance.pitch = 0.5; // Más grave
-  utterance.volume = 0.8; // Volumen reducido
+  utterance.lang = 'es-MX'; // Forzar español mexicano
+  utterance.rate = 1.1; // Velocidad normal
+  utterance.pitch = 0.8; // Tono más agudo/amigable
+  utterance.volume = 0.9; // Volumen normal
   
-  // Efecto robótico adicional
+  // Efecto robótico mexicano más expresivo
   utterance.onboundary = (event) => {
     if (event.name === 'word') {
-      utterance.rate = Math.random() * 0.2 + 0.8; // Variación aleatoria
+      // Variación más pronunciada para efecto robótico amigable
+      utterance.rate = Math.random() * 0.3 + 0.9;
+      utterance.pitch = Math.random() * 0.4 + 0.7;
     }
   };
   
