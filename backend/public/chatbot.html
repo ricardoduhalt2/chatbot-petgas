@@ -301,25 +301,24 @@ function detectLanguage(text) {
 
 // Configurar síntesis de voz robótica mexicana amigable
 const synth = window.speechSynthesis;
-function speak(text) {
+function speak(text, lang = 'es') {
   if (synth.speaking) {
     synth.cancel();
   }
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'es-MX'; // Forzar español mexicano
+  utterance.lang = lang === 'en' ? 'en-US' : 'es-MX';
   utterance.rate = 1.1; // Velocidad normal
   utterance.pitch = 0.8; // Tono más agudo/amigable
   utterance.volume = 0.9; // Volumen normal
-  
-  // Efecto robótico mexicano más expresivo
+
+  // Efecto robótico más expresivo
   utterance.onboundary = (event) => {
     if (event.name === 'word') {
-      // Variación más pronunciada para efecto robótico amigable
       utterance.rate = Math.random() * 0.3 + 0.9;
       utterance.pitch = Math.random() * 0.4 + 0.7;
     }
   };
-  
+
   synth.speak(utterance);
 }
 
@@ -335,10 +334,11 @@ async function handleQuestion(question) {
     console.log('Respuesta recibida del backend:', data);
     chatWindow.lastChild.remove();
     const answer = data.answer || 'No tengo una respuesta en este momento.';
+    const language = data.language || 'es';
     console.log('Mostrando respuesta:', answer);
     appendMessage('Bot', answer);
     // Leer respuesta en voz alta
-    speak(answer);
+    speak(answer, language);
 
     // Si requiere aprobación para guardar
     if (data.pendingApproval) {

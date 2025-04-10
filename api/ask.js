@@ -19,10 +19,79 @@ function isGeneric(answer) {
   return genericResponses.some(g => normalized.includes(g));
 }
 
-async function fetchGemini(prompt) {
+function detectLangSimple(text) {
+  const englishWords = ['what', 'who', 'where', 'when', 'why', 'how', 'is', 'are', 'do', 'does', 'can', 'could', 'would', 'should'];
+  const lower = text.toLowerCase();
+  let count = 0;
+  for (const word of englishWords) {
+    if (lower.includes(word)) count++;
+  }
+  return count >= 1 ? 'en' : 'es';
+}
+
+function detectLangFromText(text) {
+  const englishWords = ['the', 'and', 'you', 'are', 'is', 'to', 'of', 'in', 'it', 'for', 'on', 'with', 'as', 'by', 'at', 'from'];
+  const lower = text.toLowerCase();
+  let count = 0;
+  for (const word of englishWords) {
+    if (lower.includes(word)) count++;
+  }
+  return count >= 2 ? 'en' : 'es';
+}
+
+function stripMarkdown(text) {
+  if (!text) return '';
+  return text.replace(/(\*\*|__|[_*`#])/g, '').trim();
+}
+
+async function fetchGemini(question, contextText, langHint = 'es') {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    const prompt = langHint === 'en' ? `
+Given the following question and a list of question-answer pairs from the knowledge base, evaluate each pair and assign a "score" between 0 and 1 indicating how relevant it is to the question (1 = very relevant, 0 = not relevant).
+
+If any pair has a score above 0.8, return that as the best answer.
+
+If none have a score above 0.8, generate a new answer based on the question and general context.
+
+Return a JSON with:
+- "answer": the best answer found or generated
+- "score": the relevance score (1 if generated)
+- "language": detected language ("es" or "en")
+
+Do not use markdown formatting, asterisks, hashes, or any special symbols in the answer. Only plain text.
+
+Question:
+${question}
+
+Knowledge base:
+${contextText}
+
+Respond only with the JSON, no explanations.
+` : `
+Dada la siguiente pregunta y una lista de pares pregunta-respuesta de la base de conocimiento, evalúa cada par y asigna un "score" entre 0 y 1 que indique cuán relevante es para la pregunta (1 = muy relevante, 0 = nada relevante).
+
+Si alguno de los pares tiene un score mayor a 0.8, devuelve ese como la mejor respuesta.
+
+Si ninguno supera 0.8, genera una respuesta nueva basada en la pregunta y el contexto general.
+
+Devuelve un JSON con:
+- "answer": la mejor respuesta encontrada o generada
+- "score": el score de relevancia (1 si es generada)
+- "language": el idioma detectado ("es" o "en")
+
+No uses formato markdown, ni asteriscos, ni almohadillas, ni símbolos especiales en la respuesta. Solo texto plano.
+
+Pregunta:
+${question}
+
+Base de conocimiento:
+${contextText}
+
+Responde solo con el JSON, sin explicaciones.
+`;
+
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -35,10 +104,41 @@ async function fetchGemini(prompt) {
       })
     });
     const data = await response.json();
-    return data.candidates?.[0]?.content?.parts?.[0]?.text || 'No tengo una respuesta en este momento.';
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    try {
+      const jsonStart = text.indexOf('{');
+      const jsonEnd = text.lastIndexOf('}');
+      if (jsonStart !== -1 && jsonEnd !== -1) {
+        const jsonString = text.substring(jsonStart, jsonEnd + 1);
+        const parsed = JSON.parse(jsonString);
+
+        // Elegir el mejor candidato
+        let bestCandidate = null;
+        if (parsed.candidates && Array.isArray(parsed.candidates)) {
+          parsed.candidates.forEach(c => {
+            if (!bestCandidate || (c.score > bestCandidate.score)) {
+              bestCandidate = c;
+            }
+          });
+        }
+
+        // Si hay un candidato suficientemente bueno, usarlo
+        if (bestCandidate && bestCandidate.score >= 0.7) {
+          return { answer: stripMarkdown(bestCandidate.answer), score: bestCandidate.score, language: langHint };
+        }
+
+        // Si no, usar la respuesta generada
+        if (parsed.generated_answer) {
+          return { answer: stripMarkdown(parsed.generated_answer), score: 0.5, language: langHint };
+        }
+      }
+    } catch (e) {
+      console.error('Error parseando JSON de Gemini:', e);
+    }
+    return { answer: 'No tengo una respuesta en este momento.', score: 0, language: langHint };
   } catch (err) {
     console.error('Error consultando Gemini:', err);
-    return 'No tengo una respuesta en este momento.';
+    return { answer: 'No tengo una respuesta en este momento.', score: 0, language: 'es' };
   }
 }
 
@@ -118,7 +218,8 @@ module.exports = async (req, res) => {
       const MIN_SCORE_THRESHOLD = 2;
 
       if (bestMatch && bestMatch.score >= MIN_SCORE_THRESHOLD) {
-        res.json({ answer: bestMatch.answer });
+        const lang = detectLangFromText(bestMatch.answer);
+        res.json({ answer: bestMatch.answer, language: lang });
         return;
       }
 
@@ -130,35 +231,23 @@ module.exports = async (req, res) => {
         });
       }
 
-      const prompt = `
-Responde la siguiente pregunta sobre residuos plásticos en República Dominicana y PETGAS.
+      const langHint = detectLangSimple(question);
+      const geminiResult = await fetchGemini(question, contextText, langHint);
 
-Prioriza la información de la base de conocimiento y de los sitios:
-- petgascoin.com
-- petgas.com.mx
-- petgas.com.do
+      if (!isGeneric(geminiResult.answer) && (!bestMatch || bestMatch.score < MIN_SCORE_THRESHOLD) && geminiResult.score < 0.8) {
+        // Solo guardar si la confianza es baja y no hay buen match previo
+        await supabase.from('knowledge_base').insert([{ question, answer: geminiResult.answer }]);
+      }
 
-Solo si no encuentras información suficiente en esas fuentes, usa tu conocimiento general o fuentes externas.
-
-Pregunta: ${question}
-
-Contexto:
-${contextText}
-`;
-
-    const aiResponse = await fetchGemini(prompt);
-
-    if (!isGeneric(aiResponse) && (!bestMatch || bestMatch.score < MIN_SCORE_THRESHOLD)) {
-      await supabase.from('knowledge_base').insert([{ question, answer: aiResponse }]);
-    }
-
-    res.json({ answer: aiResponse });
-    return;
+      const lang = detectLangFromText(geminiResult.answer);
+      res.json({ answer: geminiResult.answer, language: lang, score: geminiResult.score });
+      return;
   }
 
   // If superchido is true, always use Gemini directly
-  const aiResponse = await fetchGemini(question);
-  res.json({ answer: aiResponse });
+  const langHint = detectLangSimple(question);
+  const geminiResult = await fetchGemini(question, '', langHint);
+  res.json({ answer: geminiResult.answer, language: geminiResult.language, score: geminiResult.score });
   } catch (err) {
     console.error('Error en API /ask:', err);
     res.status(500).json({ error: 'Server error' });
