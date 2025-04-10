@@ -27,7 +27,7 @@ const pageSize = 12;
 
 async function loadKnowledge() {
   try {
-    const res = await fetch('http://localhost:3001/knowledge');
+    const res = await fetch('http://localhost:10000/knowledge');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     allData = data.data || [];

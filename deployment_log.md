@@ -89,6 +89,46 @@
 ### Alimentación de la base de conocimiento - Septiembre 2025
 
 - Se creó el script `api/feed_supabase.js` para insertar preguntas y respuestas en Supabase vía API REST.
+
+---
+
+### Correcciones y despliegue exitoso - Septiembre 2025
+
+- Se detectó un error crítico: Render no encontraba `backend/server.js` debido a que el directorio `backend` estaba configurado incorrectamente como un **submódulo roto**.
+
+---
+
+### URLs importantes en producción
+
+- **Panel de administración (alimentar base de conocimiento):**  
+  [https://chatbot-petgas.onrender.com/admin.html](https://chatbot-petgas.onrender.com/admin.html)
+
+- **Visor público de la base de conocimiento:**  
+  [https://chatbot-petgas.onrender.com/knowledge.html](https://chatbot-petgas.onrender.com/knowledge.html)
+
+---
+
+### Gestión de usuarios administradores
+
+- Los usuarios y contraseñas para acceder al panel privado están **hardcodeados** en el backend.
+- Usuarios actuales por defecto (debes cambiarlos en producción):
+  - **admin / **********
+  - **editor / **********
+- Para agregar o cambiar administradores:
+  1. Edita el archivo `backend/server.js`.
+  2. Busca el arreglo o estructura donde están definidos los usuarios y contraseñas.
+  3. Agrega, elimina o modifica las credenciales según sea necesario.
+  4. Guarda los cambios, haz commit y push a GitHub.
+  5. Render desplegará automáticamente la nueva configuración.
+
+- **Recomendación:** En el futuro, migrar a un sistema de usuarios almacenados en base de datos o variables de entorno para mayor seguridad y flexibilidad.
+
+- Se eliminó el submódulo defectuoso y se convirtió `backend/` en un directorio normal, añadiendo todos sus archivos al repositorio.
+- Se corrigió el script `"start"` en `package.json` para que apunte a `server.js` en la raíz, que a su vez importa el backend.
+- Se confirmaron y subieron todos los cambios a GitHub.
+- Render desplegó correctamente el backend, mostrando el mensaje **"Backend running on port 10000"**.
+- Estado final: **Backend operativo y accesible en producción sin errores.**
+
 - Se implementó un **panel privado** (`/admin.html`) con:
   - Login (usuarios: `admin`/`admin123`, `editor`/`editor123`)
   - Formulario para pegar texto plano
