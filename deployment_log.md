@@ -210,3 +210,16 @@
 - Persisten algunos truncamientos `"..."` en preguntas generadas, detectados en Supabase y en pruebas recientes.
 - Próxima corrección: limpiar explícitamente `"..."` en el texto fuente antes de generar preguntas, y asegurar que la palabra `"¿Qué"` esté correctamente formada.
 - Documentación actualizada en README.md con todos estos pasos y funcionalidades.
+
+---
+
+## Octubre 2025 - Mejoras en Base de Conocimiento y Paginación (4 Oct 2025)
+
+- Se corrigió el endpoint `/knowledge` para que devuelva los registros ordenados por `id` descendente, mostrando los cambios más recientes primero.
+- Se reinició el backend para aplicar esta corrección.
+- Se mejoró la interfaz `knowledge.html`:
+  - Ahora incluye paginación con números de página, permitiendo saltar directamente a cualquier página.
+  - La página actual se resalta para mejor visibilidad.
+  - Se mantiene la búsqueda y la paginación combinadas.
+- Confirmado que ahora se visualizan correctamente los últimos cambios insertados en Supabase.
+- Listo para subir la actualización a GitHub.

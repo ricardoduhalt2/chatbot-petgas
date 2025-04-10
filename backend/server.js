@@ -302,7 +302,7 @@ app.get('/knowledge', async (req, res) => {
     const { data, error } = await supabase
       .from('knowledge_base')
       .select('question, answer')
-      .order('id', { ascending: true });
+      .order('id', { ascending: false });
     if (error) {
       console.error('Error fetching knowledge base:', error);
       return res.status(500).json({ error: 'Error fetching knowledge base' });

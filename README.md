@@ -20,6 +20,10 @@ A web-based AI chatbot designed to answer questions about climate change, intern
 - Detección automática de idioma (español/inglés)
 - Configuración de voz robótica con efectos especiales
 - Mejorado diseño de la interfaz del chatbot
+- **Mejorada la paginación en la base de conocimientos (`knowledge.html`) con números de página y resaltado de la página actual.**
+- **Corregido el backend para que el endpoint `/knowledge` devuelva los registros ordenados por `id` descendente, mostrando los cambios más recientes primero.**
+- **Reiniciado el backend para aplicar estas mejoras.**
+- **Confirmado que ahora se visualizan correctamente los últimos cambios insertados en Supabase.**
 
 ## 🚀 Previous Updates (September 2025)
 
@@ -126,4 +130,4 @@ See `deployment_log.md` for a detailed history of deployment steps, fixes, and f
 
 ---
 
-## 📅 Last updated: September 2025
+## 📅 Last updated: October 2025

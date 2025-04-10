@@ -5,64 +5,64 @@ const SUPABASE_SERVICE_ROLE = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJz
 
 const data = [
   {
-    question: '¿Qué es Petgas?',
-    answer: 'Petgas es una organización que transforma residuos plásticos no reciclables en energía y combustibles limpios mediante tecnología innovadora, con presencia en México y República Dominicana, y que también ha expandido su concepto al sector de criptomonedas.'
+    question: "What is Petgas?",
+    answer: "Petgas is a Mexican company that transforms plastic waste, even mixed, into high-quality synthetic fuels like gasoline and diesel through a non-catalytic pyrolysis process, aiming to create a circular economy and reduce pollution."
   },
   {
-    question: '¿Cuál es la actividad principal de Petgas?',
-    answer: 'Petgas utiliza un proceso avanzado de pirólisis no catalítica e ingeniería inversa en ausencia de oxígeno para convertir plásticos no reciclables en gas, sin emisiones contaminantes, y producir combustibles limpios mediante condensación cuántica.'
+    question: "Who works at Petgas?",
+    answer: "Petgas Team:\n- Daniel Rodríguez Gutiérrez (CEO): drg@petgas.com.mx\n- José de Jesús Escoto Romero (Commercial Director): jer@petgas.com.mx\n- Jesús Manuel Escoto Faces (Global Linkage CSO & Marketing): jef@petgas.com.mx\n- Andoni Álvarez Heiling (Legal Director): legal@petgas.com.mx\n- Diego Escoto Yunes (Global Linkage Subdirector): dey@petgas.com.mx\n- Fabio Baca Padilla (Technology Development Director): fbp@petgas.com.mx\n- Kathia Liahut Lopez (Chemistry Area Head): quimica@petgas.com.mx\n- Christopher Trapp (Board Member): christopher.trapp@petgas.com.mx\n- Roberto Cerda (Petgas Oceans): oceans@petgas.com.mx\n- Sandra M. Ponce de León (International Alliances): spd@petgas.com.mx\n- Estefania Ferrera Salgado (Web3): efs@petgas.com.mx"
   },
   {
-    question: '¿Petgas quema plástico?',
-    answer: 'No, Petgas no quema plástico. Realiza un proceso de gasificación cerrado que no genera emisiones al medio ambiente.'
+    question: "What environmental benefits does Petgas offer?",
+    answer: "Petgas helps eliminate non-recyclable plastic waste, reduces environmental pollution, and produces clean fuels without generating polluting emissions."
   },
   {
-    question: '¿En qué países tiene presencia Petgas?',
-    answer: 'Petgas tiene presencia principalmente en México y República Dominicana.'
+    question: "What types of plastics does Petgas process?",
+    answer: "Petgas processes non-recyclable plastic waste, transforming it into energy and clean fuels."
   },
   {
-    question: '¿Qué hace Petgas en México?',
-    answer: 'En México, Petgas transforma residuos plásticos en energía mediante tecnología de gasificación, ayudando a resolver problemas ambientales relacionados con la contaminación por plásticos.'
+    question: "What technology does Petgas use to transform plastics?",
+    answer: "Uses non-catalytic pyrolysis and reverse engineering in a closed oxygen-free process, followed by quantum condensation."
   },
   {
-    question: '¿Qué hace Petgas en República Dominicana?',
-    answer: 'En República Dominicana, Petgas promueve esquemas de gestión integral de residuos, revalorización y generación de nuevas cadenas productivas con un modelo de economía circular cerrado, alineado con la estrategia climática del país.'
+    question: "Does Petgas burn plastic?",
+    answer: "No, Petgas doesn't burn plastic. It performs a closed gasification process that doesn't emit pollutants into the environment."
   },
   {
-    question: '¿Qué es PetgasCoin?',
-    answer: 'PetgasCoin es un token de criptomoneda identificado como $PGC, que opera en redes blockchain como Solana, Polygon y Binance Smart Chain, y forma parte del movimiento ecológico de Petgas.'
+    question: "In which countries does Petgas operate?",
+    answer: "Petgas operates mainly in Mexico and the Dominican Republic."
   },
   {
-    question: '¿En qué redes blockchain opera PetgasCoin?',
-    answer: 'PetgasCoin opera en Solana, Polygon y Binance Smart Chain.'
+    question: "What is PetgasCoin?",
+    answer: "PetgasCoin ($PGC) is a cryptocurrency token operating on Solana, Polygon, and Binance Smart Chain blockchains, part of Petgas' ecological movement."
   },
   {
-    question: '¿Cuál es el eslogan de PetgasCoin?',
-    answer: 'Join the Petgas movement and transform into a greener tomorrow.'
+    question: "On which blockchains does PetgasCoin operate?",
+    answer: "Solana, Polygon, and Binance Smart Chain."
   },
   {
-    question: '¿Qué modelo económico sigue Petgas?',
-    answer: 'Petgas adopta un modelo de economía circular que elimina residuos plásticos no reciclables, establece alianzas para un futuro sostenible, genera nuevas cadenas productivas y contribuye a la descontaminación del aire, suelo y agua.'
+    question: "What is PetgasCoin's slogan?",
+    answer: "Join the Petgas movement and transform into a greener tomorrow."
   },
   {
-    question: '¿Cuáles son las etapas del proceso tecnológico de Petgas?',
-    answer: 'El proceso consta de tres etapas: gasificación (conversión del plástico en gas mediante calor controlado), condensación cuántica (separación molecular por longitud de cadenas de carbono) y obtención de combustibles superiores compatibles con cualquier motor.'
+    question: "What are the stages of Petgas' technological process?",
+    answer: "Three stages: 1) Gasification (plastic-to-gas conversion via controlled heat), 2) Quantum condensation (molecular separation by carbon chain length), 3) Production of superior motor-compatible fuels."
   },
   {
-    question: '¿Qué beneficios ambientales ofrece Petgas?',
-    answer: 'Petgas contribuye a eliminar residuos plásticos no reciclables, reduce la contaminación ambiental y produce combustibles limpios sin generar emisiones contaminantes.'
+    question: "What environmental benefits does Petgas offer?",
+    answer: "Petgas helps eliminate non-recyclable plastic waste, reduces environmental pollution, and produces clean fuels without generating polluting emissions."
   },
   {
-    question: '¿Qué tipo de plásticos procesa Petgas?',
-    answer: 'Petgas procesa residuos plásticos no reciclables, transformándolos en energía y combustibles limpios.'
+    question: "What type of plastics does Petgas process?",
+    answer: "Petgas processes non-recyclable plastic waste, transforming it into energy and clean fuels."
   },
   {
-    question: '¿Qué tecnología utiliza Petgas para transformar plásticos?',
-    answer: 'Utiliza pirólisis no catalítica e ingeniería inversa en un proceso cerrado sin oxígeno, seguido de condensación cuántica para obtener combustibles de alta calidad.'
+    question: "What technology does Petgas use to transform plastics?",
+    answer: "Non-catalytic pyrolysis and reverse engineering in a closed oxygen-free process, followed by quantum condensation."
   },
   {
-    question: '¿Qué productos finales obtiene Petgas?',
-    answer: 'Obtiene combustibles limpios y superiores compatibles con cualquier motor, a partir de residuos plásticos no reciclables.'
+    question: "What products does Petgas obtain?",
+    answer: "Clean, high-quality fuels compatible with any engine, from non-recyclable plastic waste."
   }
 ];
 
