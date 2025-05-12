@@ -77,9 +77,14 @@ app.post('/ask', async (req, res) => {
     console.log('No se encontró respuesta suficientemente relevante (mejor score:', bestMatch?.score ?? 0, '), consultando Gemini...');
 
     const model = googleGenAI.model({ model: "gemini-1.5-flash-latest"});
-    const result = await model.generateContent(question);
-    const aiResponse = result.candidates[0].content.parts[0].text;
-    console.log('Respuesta Gemini:', aiResponse);
+    try {
+      const result = await model.generateContent(question);
+      const aiResponse = result.candidates[0].content.parts[0].text;
+      console.log('Respuesta Gemini:', aiResponse);
+    } catch (error) {
+      console.error('Error calling Gemini API:', error);
+      return res.status(500).json({ error: 'Error calling Gemini API: ' + error.message });
+    }
 
     // Ya no guardar automáticamente, requerir aprobación manual
     return res.json({ answer: aiResponse, pendingApproval: true });
