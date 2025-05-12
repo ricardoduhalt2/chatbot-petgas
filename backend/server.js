@@ -45,7 +45,7 @@ app.post('/ask', async (req, res) => {
           }
           keywordMap[row.knowledge_id].push(row.keyword);
         });
-      }
+      }K
 
       for (const entry of kbEntries) {
         if (!entry.answer) continue;
@@ -86,8 +86,7 @@ app.post('/ask', async (req, res) => {
       return res.status(500).json({ error: 'Error calling Gemini API: ' + error.message });
     }
 
-    // Ya no guardar automáticamente, requerir aprobación manual
-    return res.json({ answer: aiResponse, pendingApproval: true });
+    return res.json({ answer: aiResponse });
   } catch (err) {
     console.error('Error en endpoint /ask:', err);
     res.status(500).json({ error: 'Server error' });
