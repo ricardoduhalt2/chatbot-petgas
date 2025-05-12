@@ -13,6 +13,13 @@ A web-based AI chatbot designed to answer questions about climate change, intern
 
 ---
 
+## 🚀 Recent Updates (December 2025)
+
+- **Keyword Removal:** Removed the "SUPERCHIDO" keyword requirement. The chatbot now always attempts to answer, checking the knowledge base first and then using the AI model if necessary.
+- **SDK Integration:** Updated the AI interaction to use the official `@google/generative-ai` Node.js SDK for more robust responses.
+
+---
+
 ## 🚀 Recent Updates (October 2025)
 
 ### Últimos Cambios
@@ -130,4 +137,4 @@ See `deployment_log.md` for a detailed history of deployment steps, fixes, and f
 
 ---
 
-## 📅 Last updated: October 2025
+## 📅 Last updated: December 2025
