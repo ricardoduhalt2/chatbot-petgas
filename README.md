@@ -15,6 +15,7 @@ A web-based AI chatbot designed to answer questions about climate change, intern
 
 ## 🚀 Recent Updates (May 2025)
 
+- **Text-to-Speech (TTS):** Added text-to-speech functionality to the chatbot interface, with an attempt to use a Latin American Spanish voice for Spanish responses and a British English voice for English responses.
 - **Enhanced AI Integration:** The chatbot now uses Google Gemini AI to analyze relevant entries from the Supabase knowledge base and generate more comprehensive answers. If no relevant entries are found, Gemini will use its own knowledge.
 - **Keyword Removal:** Removed the "SUPERCHIDO" keyword requirement. The chatbot now always attempts to answer, checking the knowledge base first and then using the AI model if necessary.
 - **SDK Integration:** Updated the AI interaction to use the official `@google/generative-ai` Node.js SDK for more robust responses.
