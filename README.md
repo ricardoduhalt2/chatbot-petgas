@@ -13,8 +13,9 @@ A web-based AI chatbot designed to answer questions about climate change, intern
 
 ---
 
-## 🚀 Recent Updates (December 2025)
+## 🚀 Recent Updates (May 2025)
 
+- **Enhanced AI Integration:** The chatbot now uses Google Gemini AI to analyze relevant entries from the Supabase knowledge base and generate more comprehensive answers. If no relevant entries are found, Gemini will use its own knowledge.
 - **Keyword Removal:** Removed the "SUPERCHIDO" keyword requirement. The chatbot now always attempts to answer, checking the knowledge base first and then using the AI model if necessary.
 - **SDK Integration:** Updated the AI interaction to use the official `@google/generative-ai` Node.js SDK for more robust responses.
 
@@ -59,7 +60,7 @@ A web-based AI chatbot designed to answer questions about climate change, intern
 
 - **Backend:** Node.js, Express
 - **Database:** Supabase (PostgreSQL)
-- **AI Integration:** Google Gemini API
+- **AI Integration:** Google Gemini API (analyzes knowledge base data for comprehensive responses)
 - **Frontend:** HTML, CSS, JavaScript
 - **Deployment:** Render.com
 - **Other:** Axios, dotenv, cors
@@ -137,4 +138,4 @@ See `deployment_log.md` for a detailed history of deployment steps, fixes, and f
 
 ---
 
-## 📅 Last updated: December 2025
+## 📅 Last updated: May 2025

@@ -5,9 +5,10 @@ const { createClient } = require('@supabase/supabase-js');
 const fetch = require('node-fetch');
 const { GoogleGenAI } = require('@google/genai');
 
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const googleGenAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+console.log('googleGenAI object:', googleGenAI);
 
 const app = express();
 app.use(cors());
@@ -45,7 +46,7 @@ app.post('/ask', async (req, res) => {
           }
           keywordMap[row.knowledge_id].push(row.keyword);
         });
-      }K
+      }
 
       for (const entry of kbEntries) {
         if (!entry.answer) continue;
@@ -69,24 +70,30 @@ app.post('/ask', async (req, res) => {
     const bestMatch = scoredEntries[0];
     const MIN_SCORE_THRESHOLD = 2;
 
-    if (bestMatch && bestMatch.score >= MIN_SCORE_THRESHOLD) {
-      console.log('Mejor respuesta encontrada en Supabase con score', bestMatch.score, ':', bestMatch.answer);
-      return res.json({ answer: bestMatch.answer });
+    let prompt = question;
+    if (scoredEntries.length > 0) {
+      const knowledgeBaseContext = scoredEntries
+        .map(entry => `Question: ${entry.question}\nAnswer: ${entry.answer}`)
+        .join('\n\n');
+      prompt = `Based on the following knowledge base entries, answer the user's question. If the knowledge base does not contain relevant information, use your own knowledge.\n\nKnowledge Base:\n${knowledgeBaseContext}\n\nUser Question: ${question}`;
+      console.log('Found relevant entries in Supabase. Consulting Gemini with context.');
+    } else {
+      console.log('No relevant entries found in Supabase. Consulting Gemini without context.');
     }
 
-    console.log('No se encontró respuesta suficientemente relevante (mejor score:', bestMatch?.score ?? 0, '), consultando Gemini...');
-
-    const model = googleGenAI.model({ model: "gemini-1.5-flash-latest"});
     try {
-      const result = await model.generateContent(question);
+      const result = await googleGenAI.models.generateContent({
+        model: "gemini-1.5-flash-latest",
+        contents: [{ role: "user", parts: [{ text: prompt }] }]
+      });
+      console.log('Gemini generateContent result:', result);
       const aiResponse = result.candidates[0].content.parts[0].text;
       console.log('Respuesta Gemini:', aiResponse);
+      return res.json({ answer: aiResponse });
     } catch (error) {
       console.error('Error calling Gemini API:', error);
       return res.status(500).json({ error: 'Error calling Gemini API: ' + error.message });
     }
-
-    return res.json({ answer: aiResponse });
   } catch (err) {
     console.error('Error en endpoint /ask:', err);
     res.status(500).json({ error: 'Server error' });
