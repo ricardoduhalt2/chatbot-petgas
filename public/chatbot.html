@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8" />
-<title>Chatbot CHIDO</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<link rel="icon" type="image/png" href="./assets/chatbot-icon.png" />
-<style>
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot; /&gt;
+&lt;title&gt;Chatbot CHIDO&lt;/title&gt;
+&lt;link href=&quot;https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;./assets/chatbot-icon.png&quot; /&gt;
+&lt;style&gt;
 @keyframes pulseSlow {
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.05); opacity: 0.8; }
@@ -22,8 +22,8 @@
   display: inline-block;
   white-space: pre-wrap;
 }
-</style>
-<style>
+&lt;/style&gt;
+&lt;style&gt;
 /* Responsive adjustments */
 @media (max-width: 640px) {
   #chatbot-root {
@@ -38,29 +38,30 @@
     bottom: 1rem !important;
   }
 }
-</style>
-</head>
-<body class="bg-gray-100">
-<div id="chatbot-root" class="fixed bottom-4 right-8 w-64 max-h-[80vh] bg-white rounded-lg shadow-lg flex flex-col overflow-hidden border-4 border-green-600">
-  <div class="flex items-center justify-between p-4 bg-gradient-to-r from-green-800 to-green-500 text-white rounded-t-lg shadow-md">
-    <div class="flex items-center space-x-2">
-      <img src="assets/chatbot-icon.png" alt="Bot" class="rounded-full flex-shrink-0 border-2 border-white animate-pulse-slow">
-      <span class="font-semibold text-lg">CHIDO</span>
-    </div>
-    <button id="close-btn" class="text-white text-xl font-bold hover:text-gray-200 transition">&times;</button>
-  </div>
-  <div id="chat-window" class="flex-1 overflow-y-auto p-3 space-y-3 bg-white"></div>
-  <div class="p-3 border-t border-gray-300 bg-white flex flex-nowrap space-x-2">
-    <input id="user-input" type="text" placeholder="Escribe tu pregunta..." class="flex-1 max-w-[70%] border border-gray-300 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 transition bg-gray-100 text-gray-800" />
-    <button id="send-btn" class="flex-shrink-0 bg-green-500 hover:bg-green-600 text-white rounded-full px-3 py-2 transition">Enviar</button>
-  </div>
-</div>
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body class=&quot;bg-gray-100&quot;&gt;
+&lt;div id=&quot;chatbot-root&quot; class=&quot;fixed bottom-4 right-8 w-64 max-h-[80vh] bg-transparent rounded-lg shadow-lg flex flex-col overflow-hidden border-4 border-green-600&quot;&gt;
+  &lt;div class=&quot;flex items-center justify-between p-4 bg-gradient-to-r from-green-800 to-green-500 text-white rounded-t-lg shadow-md&quot;&gt;
+    &lt;div class=&quot;flex items-center space-x-2&quot;&gt;
+      &lt;img src=&quot;assets/chatbot-icon.png&quot; alt=&quot;Bot&quot; class=&quot;rounded-full flex-shrink-0 border-2 border-white animate-pulse-slow&quot;&gt;
+      &lt;span class=&quot;font-semibold text-lg&quot;&gt;CHIDO&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;button id=&quot;close-btn&quot; class=&quot;text-white text-xl font-bold hover:text-gray-200 transition&quot;&gt;&amp;times;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;chat-window&quot; class=&quot;flex-1 overflow-y-auto p-3 space-y-3 bg-white&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;voice-status&quot; class=&quot;text-center text-sm text-gray-500&quot;&gt;Voice Status: Loading...&lt;/div&gt;
+  &lt;div class=&quot;p-3 border-t border-gray-300 bg-white flex flex-nowrap space-x-2&quot;&gt;
+    &lt;input id=&quot;user-input&quot; type=&quot;text&quot; placeholder=&quot;Escribe tu pregunta...&quot; class=&quot;flex-1 max-w-[70%] border border-gray-300 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 transition bg-gray-100 text-gray-800&quot; style=&quot;background-color: transparent;&quot; /&gt;
+    &lt;button id=&quot;send-btn&quot; class=&quot;flex-shrink-0 bg-green-500 hover:bg-green-600 text-white rounded-full px-3 py-2 transition&quot;&gt;Enviar&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
 
-<script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+&lt;script src=&quot;https://unpkg.com/react@17/umd/react.production.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/react-dom@17/umd/react-dom.production.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@supabase/supabase-js&quot;&gt;&lt;/script&gt;
 
-<script>
+&lt;script&gt;
 const chatWindow = document.getElementById('chat-window');
 const userInput = document.getElementById('user-input');
 const closeBtn = document.getElementById('close-btn');
@@ -71,7 +72,7 @@ const toggleBtn = document.createElement('button');
 toggleBtn.id = 'chatbot-toggle';
 toggleBtn.style.display = 'none';
 toggleBtn.className = 'fixed bottom-4 right-4 bg-green-600 rounded-full p-2 shadow-lg border-2 border-white';
-toggleBtn.innerHTML = '<img src="assets/chatbot-icon.png" alt="Bot" class="w-12 h-12 rounded-full animate-pulse-slow">';
+toggleBtn.innerHTML = '&lt;img src=&quot;assets/chatbot-icon.png&quot; alt=&quot;Bot&quot; class=&quot;w-12 h-12 rounded-full animate-pulse-slow&quot;&gt;';
 document.body.appendChild(toggleBtn);
 
 function openChat() {
@@ -97,26 +98,112 @@ async function sendMessage() {
 
 sendBtn.onclick = sendMessage;
 
-userInput.addEventListener('keydown', async (e) => {
-  if (e.key === 'Enter' && userInput.value.trim() !== '') {
+userInput.addEventListener('keydown', async (e) =&gt; {
+  if (e.key === 'Enter' &amp;&amp; userInput.value.trim() !== '') {
     await sendMessage();
   }
 });
 
 function appendMessage(sender, text) {
+  console.log('appendMessage called for sender:', sender, 'with text:', text);
   const msg = document.createElement('div');
   msg.className = sender === 'Tú' ? 'text-right' : 'flex items-start space-x-2';
   if (sender === 'Tú') {
-    msg.innerHTML = `<span class="inline-block px-3 py-2 rounded-lg bg-blue-500 text-white">${text}</span>`;
+    msg.innerHTML = `&lt;span class=&quot;inline-block px-3 py-2 rounded-lg bg-blue-500 text-white&quot;&gt;${text}&lt;/span&gt;`;
   } else {
     msg.innerHTML = `
-      <img src="assets/chatbot-icon.png" alt="Bot" class="w-6 h-6 rounded-full flex-shrink-0">
-      <span class="inline-block px-3 py-2 rounded-lg bg-gray-200 text-gray-800">${text}</span>
+      &lt;img src=&quot;assets/chatbot-icon.png&quot; alt=&quot;Bot&quot; class=&quot;w-6 h-6 rounded-full flex-shrink-0&quot;&gt;
+      &lt;span class=&quot;inline-block px-3 py-2 rounded-lg bg-gray-200 text-gray-800&quot;&gt;${text}&lt;/span&gt;
     `;
   }
   chatWindow.appendChild(msg);
   chatWindow.scrollTop = chatWindow.scrollHeight;
+
+  if (sender === 'Bot') {
+    console.log('Sender is Bot, attempting to speak.');
+    const language = detectLanguage(text);
+    speak(text, language);
+  }
 }
+
+// Basic language detection (can be improved with a library)
+function detectLanguage(text) {
+  const lowerText = text.toLowerCase();
+  const spanishKeywords = ['el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'de', 'en', 'que', 'es', 'y', 'a', 'con', 'por', 'para'];
+  const englishKeywords = ['the', 'a', 'an', 'of', 'in', 'and', 'is', 'it', 'to', 'for', 'with', 'on', 'by'];
+
+  let spanishScore = 0;
+  spanishKeywords.forEach(keyword =&gt; {
+    if (lowerText.includes(keyword)) {
+      spanishScore++;
+    }
+  });
+
+  let englishScore = 0;
+  englishKeywords.forEach(keyword =&gt; {
+    if (lowerText.includes(keyword)) {
+      englishScore++;
+    }
+  });
+
+  // Simple check: if Spanish keywords are more frequent, assume Spanish
+  if (spanishScore &gt; englishScore) {
+    return 'es';
+  } else {
+    return 'en';
+  }
+}
+
+// Text-to-Speech function
+function speak(text, language) {
+  console.log('Attempting to speak:', text, 'in language:', language);
+  if ('speechSynthesis' in window) {
+    const synthesis = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // Ensure voices are loaded before trying to speak
+    const loadAndSpeak = () =&gt; {
+      const voices = synthesis.getVoices();
+      console.log('Available voices:', voices);
+      let selectedVoice = null;
+
+      if (language === 'es') {
+        // Try to find a Latin American Spanish voice
+        selectedVoice = voices.find(voice =&gt; voice.lang === 'es-LA' || voice.lang === 'es-MX');
+        if (!selectedVoice) {
+          // Fallback to any Spanish voice if no Latin American voice is found
+          selectedVoice = voices.find(voice =&gt; voice.lang.startsWith('es'));
+        }
+      } else if (language === 'en') {
+        // Try to find a British English voice
+        selectedVoice = voices.find(voice =&gt; voice.lang === 'en-GB');
+        if (!selectedVoice) {
+          // Fallback to any English voice if no British voice is found
+          selectedVoice = voices.find(voice =&gt; voice.lang.startsWith('en'));
+        }
+      }
+
+      if (selectedVoice) {
+        console.log('Selected voice:', selectedVoice);
+        utterance.voice = selectedVoice;
+      } else {
+        console.warn('No suitable voice found for language:', language, '. Using default voice.');
+      }
+
+      synthesis.speak(utterance);
+    };
+
+    if (synthesis.getVoices().length === 0) {
+      synthesis.addEventListener('voiceschanged', loadAndSpeak);
+    } else {
+      loadAndSpeak();
+    }
+
+  } else {
+    console.warn('Text-to-speech not supported in this browser.');
+  }
+}
+
 
 async function handleQuestion(question) {
   appendMessage('Bot', 'Pensando...');
@@ -138,6 +225,6 @@ async function handleQuestion(question) {
     appendMessage('Bot', 'Error al conectar con el asistente.'); // Mensaje de error más específico
   }
 }
-</script>
-</body>
-</html>
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
